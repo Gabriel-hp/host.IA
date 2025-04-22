@@ -1,0 +1,63 @@
+[
+    {
+      "ID": 1,
+      "Cliente": "João Silva",
+      "Status": "Fechado",
+      "Categoria": "Técnico"
+    },
+    {
+      "ID": 2,
+      "Cliente": "Maria Oliveira",
+      "Status": "Aberto",
+      "Categoria": "Financeiro"
+    },
+    {
+      "ID": 3,
+      "Cliente": "Carlos Souza",
+      "Status": "Fechado",
+      "Categoria": "Suporte"
+    },
+    {
+      "ID": 4,
+      "Cliente": "Ana Costa",
+      "Status": "Em andamento",
+      "Categoria": "Comercial"
+    },
+    {
+      "ID": 5,
+      "Cliente": "Rafael Pereira",
+      "Status": "Aberto",
+      "Categoria": "Técnico"
+    },
+    {
+      "ID": 6,
+      "Cliente": "Luciana Lima",
+      "Status": "Fechado",
+      "Categoria": "Financeiro"
+    },
+    {
+      "ID": 7,
+      "Cliente": "Felipe Santos",
+      "Status": "Em andamento",
+      "Categoria": "Suporte"
+    },
+    {
+      "ID": 8,
+      "Cliente": "Patricia Almeida",
+      "Status": "Aberto",
+      "Categoria": "Comercial"
+    },
+    {
+      "ID": 9,
+      "Cliente": "Lucas Ferreira",
+      "Status": "Fechado",
+      "Categoria": "Financeiro"
+    },
+    {
+      "ID": 10,
+      "Cliente": "Juliana Rocha",
+      "Status": "Aberto",
+      "Categoria": "Suporte"
+    }
+  ]
+  

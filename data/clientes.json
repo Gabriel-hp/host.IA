@@ -1,0 +1,65 @@
+{
+    "clientes": [
+      {
+        "id": 1,
+        "nome": "João Silva",
+        "email": "joao@exemplo.com",
+        "plano": "Premium"
+      },
+      {
+        "id": 2,
+        "nome": "Maria Oliveira",
+        "email": "maria@exemplo.com",
+        "plano": "Básico"
+      },
+      {
+        "id": 3,
+        "nome": "Carlos Souza",
+        "email": "carlos@exemplo.com",
+        "plano": "Standard"
+      },
+      {
+        "id": 4,
+        "nome": "Ana Costa",
+        "email": "ana@exemplo.com",
+        "plano": "Premium"
+      },
+      {
+        "id": 5,
+        "nome": "Rafael Pereira",
+        "email": "rafael@exemplo.com",
+        "plano": "Básico"
+      },
+      {
+        "id": 6,
+        "nome": "Luciana Lima",
+        "email": "luciana@exemplo.com",
+        "plano": "Standard"
+      },
+      {
+        "id": 7,
+        "nome": "Felipe Santos",
+        "email": "felipe@exemplo.com",
+        "plano": "Premium"
+      },
+      {
+        "id": 8,
+        "nome": "Patricia Almeida",
+        "email": "patricia@exemplo.com",
+        "plano": "Básico"
+      },
+      {
+        "id": 9,
+        "nome": "Lucas Ferreira",
+        "email": "lucas@exemplo.com",
+        "plano": "Standard"
+      },
+      {
+        "id": 10,
+        "nome": "Juliana Rocha",
+        "email": "juliana@exemplo.com",
+        "plano": "Premium"
+      }
+    ]
+  }
+  
