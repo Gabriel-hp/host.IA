@@ -1,0 +1,146 @@
+{
+    "empresa": "TechSupport Solutions",
+    "setor": "Suporte Técnico",
+    "documentacao": {
+      "procedimentos": [
+        {
+          "id": 1,
+          "nome": "Configuração de Roteador TP-Link Archer C20",
+          "tipo": "Hardware",
+          "nivel_dificuldade": "Iniciante",
+          "passos": [
+            {
+              "ordem": 1,
+              "descricao": "Conectar o roteador à fonte de energia e ao modem principal",
+              "detalhes": "Use o cabo de energia fornecido e um cabo Ethernet para conectar a porta WAN do roteador ao modem",
+              "ferramentas": ["Cabo Ethernet", "Fonte 12V"]
+            },
+            {
+              "ordem": 2,
+              "descricao": "Acessar a interface de administração",
+              "detalhes": "Abrir 192.168.0.1 no navegador, usar admin/admin como credenciais padrão",
+              "observacoes": "Recomendado usar Chrome em modo anônimo"
+            }
+          ],
+          "relacionados": ["INC-2023-04521"]
+        },
+        {
+          "id": 2,
+          "nome": "Formatação de Computador Windows 10",
+          "tipo": "Software",
+          "nivel_dificuldade": "Intermediário",
+          "passos": [
+            {
+              "ordem": 1,
+              "descricao": "Criar mídia de instalação",
+              "detalhes": "Baixar Media Creation Tool em https://www.microsoft.com/software-download/windows10"
+            }
+          ],
+          "relacionados": ["INC-2023-04876"]
+        }
+      ],
+      
+      "base_conhecimento": {
+        "incidentes_comuns": [
+            
+          {
+            "ticket_id": "INC-2023-04521",
+            "titulo": "Intermittência Wi-Fi Archer C6",
+            "solucao_rapida": "Alterar canal Wi-Fi para 1, 6 ou 11",
+            "procedimento_relacionado": 1
+          },
+          {
+            "ticket_id": "INC-2023-04876",
+            "titulo": "Lentidão pós-atualização Windows",
+            "solucao_rapida": "Executar: wusa /uninstall /kb:5032189",
+            "procedimento_relacionado": 2
+          },
+          {
+            "ticket_id": "INC-2024-01123",
+            "titulo": "Switch SG300 não responde ping",
+            "solucao_rapida": "Reiniciar switch e verificar configurações de VLAN"
+          },
+          {
+            "ticket_id": "INC-2024-01690",
+            "titulo": "Usuário não acessa sites HTTPS",
+            "solucao_rapida": "Verificar se proxy está bloqueando SSL. Liberar domínio temporariamente"
+          },
+          {
+            "ticket_id": "INC-2024-01702",
+            "titulo": "Erro ao enviar e-mails no Outlook 2019",
+            "solucao_rapida": "Revalidar credenciais e limpar cache de Autodiscover"
+          },
+          {
+            "ticket_id": "INC-2024-02115",
+            "titulo": "VPN SSL desconecta a cada 5 minutos",
+            "solucao_rapida": "Verificar política de timeout no firewall FortiGate"
+          }
+        ],
+        
+        "checklists": {
+          "pre_atendimento": [
+            "Verificar histórico do equipamento",
+            "Confirmar backup dos dados",
+            "Coletar número de série"
+          ],
+          "pos_atendimento": [
+            "Documentar alterações realizadas",
+            "Testar funcionalidades básicas",
+            "Obter confirmação do cliente"
+          ]
+        }
+      }
+    },
+  
+    "gestao_incidentes": {
+      "estatisticas": {
+        "mes_atual": {
+          "total": 42,
+          "resolvidos": 38,
+          "em_andamento": 4,
+          "sla_cumprido": "92%"
+        },
+        "top_problemas": [
+          {"categoria": "Wi-Fi", "quantidade": 15},
+          {"categoria": "Outlook", "quantidade": 8}
+        ]
+      },
+      
+      "fluxogramas": {
+        "problema_wifi": [
+          "1. Verificar estado das luzes do roteador",
+          "2. Testar conexão cabeada",
+          "3. Verificar canais RF com WiFi Analyzer",
+          "4. Resetar configurações de fábrica se necessário"
+        ]
+      }
+    },
+  
+    "recursos": {
+      "links_uteis": {
+        "downloads": [
+          {
+            "nome": "Media Creation Tool",
+            "url": "https://www.microsoft.com/software-download/windows10"
+          }
+        ],
+        "documentacao": [
+          {
+            "nome": "Manual TP-Link Archer C20",
+            "url": "https://www.tp-link.com.br/support/download/archer-c20/"
+          }
+        ]
+      },
+      "contatos": {
+        "suporte_nivel2": "ramal.402",
+        "supervisao": "ramal.500",
+        "emergencia_24h": "11 99999-8888"
+      }
+    },
+  
+    "metadados": {
+      "versao": "2.1.0",
+      "atualizado_em": "2023-11-25",
+      "responsavel_atualizacao": "Ana Oliveira (a.oliveira@techsupport.example.com)"
+    }
+  }

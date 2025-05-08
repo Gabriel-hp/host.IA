@@ -126,7 +126,7 @@ document.addEventListener("DOMContentLoaded", () => {
           <polyline points="3.29 7 12 12 20.71 7"></polyline>
           <line x1="12" y1="22" x2="12" y2="12"></line>
         </svg>
-        <span>LM Studio</span>
+        <span>Chat</span>
       `
       lmMessageContainer.appendChild(lmHeader)
   

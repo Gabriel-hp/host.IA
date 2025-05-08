@@ -1,0 +1,105 @@
+{
+    "titulo": "Manual de Configuração de Modem (Bridge) na OLT Datacom",
+    "cenario": {
+      "tipo_modem": "Bridge",
+      "olt": "OLT 50",
+      "porta_pon": "1/1/7 (exemplo da porta usada no POP Millenium)"
+    },
+    "passos": [
+      {
+        "etapa": 1,
+        "descricao": "Descobrir o modem (ONU) conectado",
+        "comando": "show interface gpon discovered-onus",
+        "observacao": "Localize o número de série (Serial Number) do modem que será provisionado."
+      },
+      {
+        "etapa": 2,
+        "descricao": "Entrar no modo de configuração",
+        "comando": "config"
+      },
+      {
+        "etapa": 3,
+        "descricao": "Acessar a porta PON correspondente",
+        "exemplo": "interface gpon 1/1/7"
+      },
+      {
+        "etapa": 4,
+        "descricao": "Verificar IDs de ONU disponíveis",
+        "comando": "do show interface gpon 1/1/7 onu",
+        "observacao": "Verifique qual ID está livre (ex: se aparecem 1, 2, 3 e 4, o ID 5 pode estar livre)."
+      },
+      {
+        "etapa": 5,
+        "descricao": "Confirmar se o ID está disponível",
+        "comandos": [
+          "onu 5",
+          "show"
+        ],
+        "observacao": "Se não houver nenhuma configuração retornada, o ID está livre."
+      },
+      {
+        "etapa": 6,
+        "descricao": "Configurar a ONU",
+        "comandos": [
+          "onu 5",
+          "name NOME_DA_ONU",
+          "line-profile: Default_Bridge",
+          "serial-number: SERIAL_DO_MODEM",
+          "snmp all",
+          "ipv4 vlan 16",
+          "ipv4 static address 10.{olt}.{pon}.{id}/24 default-gateway 10.{olt}.{pon}.254"
+        ]
+      },
+      {
+        "etapa": 7,
+        "descricao": "Configurar a porta Ethernet da ONU",
+        "comandos": [
+          "ethernet 1",
+          "negotiation",
+          "no shutdown",
+          "native vlan vlan-id 267",
+          "exit"
+        ]
+      },
+      {
+        "etapa": 8,
+        "descricao": "Salvar e sair",
+        "comandos": [
+          "commit",
+          "top"
+        ]
+      },
+      {
+        "etapa": 9,
+        "descricao": "Verificar se a ONU foi provisionada corretamente",
+        "comando": "do show interface gpon 1/1/7 onu 5"
+      },
+      {
+        "etapa": 10,
+        "descricao": "Configurar Service-Port para gerência",
+        "comandos": [
+          "service-port 11705",
+          "show",
+          "gpon 1/1/7 onu 5 gen 11705 match vlan vlan-id 16 action vlan replace",
+          "commit",
+          "anti-ip-spoofing"
+        ]
+      },
+      {
+        "etapa": 11,
+        "descricao": "Configurar interface do service-port",
+        "comandos": [
+          "interface service-port-11705",
+          "show",
+          "allowed-ip all",
+          "commit"
+        ]
+      }
+    ],
+    "observacoes_finais": [
+      "Sempre seguir o padrão de nomes das ONUs definido pela empresa.",
+      "O ID de ONU deve ser único e estar realmente disponível.",
+      "As VLANs e IPs devem respeitar o endereçamento da rede do POP."
+    ]
+  }
+  

@@ -4,7 +4,7 @@ header("Content-Type: application/json");
 
 // Configurações
 define('DATA_DIR', __DIR__ . '/data/');
-define('CONTEXT_FILES', ['chamados.json', 'clientes.json', 'conhecimentos.json']); // Arquivos de contexto
+define('CONTEXT_FILES', ['chamados.json', 'clientes.json', 'conhecimentos.json' , 'configOnu.json']); // Arquivos de contexto
 
 // Carrega o contexto dos arquivos JSON
 function load_context() {
@@ -19,16 +19,20 @@ function load_context() {
     return $context;
 }
 
+// Entrada do usuário
 $input = json_decode(file_get_contents("php://input"), true);
 $prompt = $input["prompt"] ?? "Olá";
 
 // Carrega o contexto da base de dados
 $database_context = load_context();
 
-// Mensagem de sistema com instruções melhoradas
+// Mensagem de sistema
 $system_message = [
     "role" => "system",
-    "content" => "Você é um assistente especializado com acesso a bases de conhecimento. Siga estas regras:
+    "content" => "Você é um assistente técnico que responde **exclusivamente com base nos dados fornecidos abaixo**. Nunca gere comandos ou respostas fora desse conteúdo. Caso a resposta não esteja contida diretamente na base, diga: 'Não encontrei essa informação em meus registros'...
+
+
+
 
 1. Formatação:
 - Use **negrito** para títulos e ênfase
@@ -44,8 +48,10 @@ $database_context
 3. Nunca mencione os arquivos JSON diretamente
 4. Para perguntas sobre dados existentes, sempre consulte o contexto antes de responder
 5. Se não souber a resposta, diga 'Não encontrei essa informação em meus registros'"
+
 ];
 
+// Corpo da requisição para o LM Studio
 $body = json_encode([
     "model" => "deepseek-r1-distill-qwen-7b",
     "messages" => [
@@ -56,6 +62,7 @@ $body = json_encode([
     "max_tokens" => 1500
 ]);
 
+// Envio via cURL
 $ch = curl_init("http://127.0.0.1:1234/v1/chat/completions");
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
@@ -63,7 +70,6 @@ curl_setopt($ch, CURLOPT_HTTPHEADER, [
     "Content-Type: application/json"
 ]);
 curl_setopt($ch, CURLOPT_POSTFIELDS, $body);
-
 $result = curl_exec($ch);
 curl_close($ch);
 
@@ -71,19 +77,22 @@ curl_close($ch);
 $data = json_decode($result, true);
 $raw_response = $data["choices"][0]["message"]["content"] ?? "Sem resposta.";
 
-// Converter Markdown para HTML (versão melhorada)
+// Remove tags <think> e seu conteúdo
+$raw_response = preg_replace('/<think>.*?<\/think>/is', '', $raw_response);
+
+// Conversão de Markdown para HTML
 function markdown_to_html($text) {
-    $html = htmlspecialchars($text);
-    
+    $html = htmlspecialchars($text, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
+
     // Negrito
-    $html = preg_replace('/\*\*(.*?)\*\*/', '<strong>$1</strong>', $html);
-    
+    $html = preg_replace('/\*\*(.*?)\*\*/s', '<strong>$1</strong>', $html);
+
     // Itálico
-    $html = preg_replace('/\*(.*?)\*/', '<em>$1</em>', $html);
-    
+    $html = preg_replace('/\*(.*?)\*/s', '<em>$1</em>', $html);
+
     // Blocos de código
     $html = preg_replace('/```(.*?)```/s', '<pre><code>$1</code></pre>', $html);
-    
+
     // Tabelas Markdown básicas
     $html = preg_replace_callback('/\|(.+?)\|/s', function($matches) {
         $rows = explode("\n", trim($matches[1]));
@@ -101,16 +110,17 @@ function markdown_to_html($text) {
         }
         return $table . '</tbody></table>';
     }, $html);
-    
+
     // Quebras de linha
     $html = nl2br($html);
-    
+
     return $html;
 }
 
+// Retorno final
 echo json_encode([
-    "resposta" => $raw_response,
+    "resposta" => trim($raw_response),
     "html" => markdown_to_html($raw_response),
-    "contexto_utilizado" => $database_context ? true : false
+    "contexto_utilizado" => !empty($database_context)
 ]);
 ?>
